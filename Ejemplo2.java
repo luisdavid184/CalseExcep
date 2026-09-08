@@ -1,9 +1,8 @@
-
 import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-class Ejemplo1{
+class Ejemplo2{
     public static void main(String[]args ){
         
          
@@ -13,9 +12,27 @@ class Ejemplo1{
         double interes=cuenta.calculaInteres(saldo,meses);
         System.out.println("Interes:"+interes);
         cuenta.procesarArchivo("Archivo.txt");
+
+        try{
+            cuenta.retirar(600.0, 1);
+        } catch (SaldoInsuficienteException e) {
+            System.out.println("Error: " + e.getMessage());
         }
+    }
+
+
+static class CuentaBancaria{
+    public void retirar(double monto,int a)throws SaldoInsuficienteException{
+        double saldoDisponnible = 500.0;
+        if(monto>saldoDisponnible){
+            throw new SaldoInsuficienteException(monto,saldoDisponnible);
+
+            }else{
+                System.out.println("Retiro exitoso: $" + monto);
+            }
+
         }
-class CuentaBancaria{
+
         public double calculaInteres(double saldo, int meses){
             try{
                 if(meses==0)throw new ArithmeticException("Meses !=0");
@@ -44,4 +61,23 @@ public void procesarArchivo(String archivo) {
                 }
         }
     } 
+}
+static class SaldoInsuficienteException extends Exception {
+    private double saldoRequerido;
+    private double saldoDisponible;
+
+    public SaldoInsuficienteException(double requerido,double disponible) {
+        super("Requiere: $" + requerido + "Disponible: $" + disponible);
+        this.saldoRequerido = requerido;
+        this.saldoDisponible = disponible;
     }
+
+    public double getSaldoRequerido() {
+        return saldoRequerido;
+    }
+
+    public double getSaldoDisponible() {
+        return saldoDisponible;
+    }
+  }
+}
