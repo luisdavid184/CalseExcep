@@ -1,0 +1,21 @@
+@startuml secuencia_excepcion
+participant Cliente
+participant Taquilla
+participant Agenda
+Cliente -> Taquilla: solicitudReserva()
+activate Taquilla
+Taquilla -> Agenda: consultarDisponibilidad()
+activate Agenda
+alt disponible
+    Agenda --> Taquilla: OK
+else ocupada
+    Agenda --> Taquilla: LocalidadOcupadaException
+end
+deactivate Agenda
+alt disponible
+    Taquilla --> Cliente: comprobante
+else ocupada
+    Taquilla --> Cliente: excepcion
+end
+deactivate Taquilla
+@enduml
