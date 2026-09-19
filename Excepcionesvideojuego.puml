@@ -1,0 +1,43 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' Clase base del sistema
+class Exception {
+  + Exception(mensaje: String)
+}
+
+' Excepciones Personalizadas del Videojuego
+class NivelInsuficienteException {
+  + NivelInsuficienteException(mensaje: String)
+}
+
+' Excepción Personalizada 2
+class VidaAgotadaException {
+  + VidaAgotadaException(mensaje: String)
+}
+
+' Clase Entidad del Juego
+class Jugador {
+  - nombre: String
+  - nivel: int
+  - vida: int
+  + Jugador(nombre: String, nivel: int, vida: int)
+  + equiparArma(nivelRequerido: int) : void
+  + recibirDano(dano: int) : void
+}
+
+' Clase de Ejecución
+class JuegoApp {
+  + main(args: String[]) : void
+}
+
+' Herencia
+Exception <|-- NivelInsuficienteException
+Exception <|-- VidaAgotadaException
+
+' Uso y lanzamientos de excepciones
+Jugador ..> NivelInsuficienteException : <<throws>>
+Jugador ..> VidaAgotadaException : <<throws>>
+JuegoApp ..> Jugador : <<use>>
+
+@enduml
