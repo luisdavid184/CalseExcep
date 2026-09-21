@@ -12,7 +12,7 @@ else ocupada
     Agenda --> Taquilla: LocalidadOcupadaException
 end
 deactivate Agenda
-alt disponible
+alt disponiblec
     Taquilla --> Cliente: comprobante
 else ocupada
     Taquilla --> Cliente: excepcion
